@@ -5,21 +5,13 @@ FROM ubuntu:latest
 WORKDIR /app
 
 # Install necessary dependencies
-RUN apt-get update && apt-get install -y \
-    g++ \
-    libcpprest-dev \
-    libboost-all-dev \
-    libssl-dev \
-    cmake
+RUN apt-get update && apt-get install -y g++ cmake
 
 # Copy the source code into the container
 COPY main.cpp .
 
-# Copy data into the container
-COPY data.txt .
-
 # Compile the C++ code
-RUN g++ -o main main.cpp -lcpprest -lboost_system -lboost_thread -lboost_chrono -lboost_random -lssl -lcrypto -std=c++20
+RUN g++ -O3 -march=native -flto -funroll-loops -ffast-math -fno-exceptions -fno-rtti -std=c++20 -o main main.cpp
 
 # Expose the port on which the API will listen
 EXPOSE 8080

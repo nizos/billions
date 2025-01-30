@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-    ifstream file("data.txt");
+    ifstream file("/input");
 
         string line;
         string country;
